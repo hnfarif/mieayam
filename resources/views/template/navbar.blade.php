@@ -15,8 +15,8 @@
       <div class="container">
         <div class="row align-items-center">
           <div class="col-12 text-center">
-            <a href="index.html" class="site-logo">
-              <img src="{{asset('images/logo3.png')}}" alt="Image" class="img-fluid" height="20" width="400">
+            <a href="/home" class="site-logo">
+              <img src="{{asset('images/logo3.png')}}" alt="Image" class="img-fluid" height="20" width="300">
             </a>
           </div>
           <a href="#" class="mx-auto d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black"><span
@@ -34,20 +34,22 @@
                     <nav class="site-navigation position-relative text-left" role="navigation">
                     <ul class="site-menu main-menu js-clone-nav mx-auto d-none pl-0 d-lg-block border-none">
 
-                        <li class="{{ Route::is('/') ? 'active' : ''  }}"><a href="{{ url('/') }}" class="nav-link text-left ml-5">Beranda</a>
+                        <li ><a href="{{ url('/') }}" class="nav-link text-left ml-5">Beranda</a>
                         </li>
 
-                        <li class="{{ Route::is('menu') ? 'active' : '' }}"><a href="{{ url('/menu') }}" class="nav-link text-left">Menu</a>
+                        <li ><a href="{{ url('/menu') }}" class="nav-link text-left">Menu</a>
                         </li>
 
-                        <li class="{{ Route::is('testimonial') ? 'active' : '' }}"><a href="{{ url('/testimonial') }}" class="nav-link text-left">Testimoni</a>
+                        <li ><a href="{{ url('/testimonial') }}" class="nav-link text-left">Testimoni</a>
                         </li>
 
-                        <li class="{{ Route::is('about') ? 'active' : '' }}"><a href="{{ url('/about') }}" class="nav-link text-left">Tentang</a>
+                        <li ><a href="{{ url('/about') }}" class="nav-link text-left">Tentang</a>
                         </li>
 
-                        <li class="{{ Route::is('cart') ? 'active' : '' }}"><a href="{{ url('/cart') }}" type="button" class="nav-link text-left"><i class="icon-shopping-bag mr-2 ml-5"></i>(0)</a>
+                        <li id="idttl"><a href="{{ url('/cart') }}" type="button" class="nav-link text-left" id="ttlCart"><i class="icon-shopping-bag ml-2"></i></a>
                         </li>
+
+
                     <ul>
                     </nav>
 

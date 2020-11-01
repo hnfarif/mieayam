@@ -18,7 +18,6 @@ class Cart extends Model
 
                 array_push($arr, $ttl[1]);
             }
-            // return $ttl;
         }
         $sum = array_sum($arr);
 

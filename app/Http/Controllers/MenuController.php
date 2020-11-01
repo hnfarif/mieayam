@@ -81,4 +81,23 @@ class MenuController extends Controller
     {
         //
     }
+
+    public function jumlahItem(Request $request)
+    {
+        $jml = $request->get('total');
+        $sum  = 0;
+        $arr = [];
+        foreach ($jml as $key => $ttl) {
+
+            if (isset($ttl[1])) {
+
+                array_push($arr, $key);
+            }
+        }
+        $sum = count($arr);
+
+
+
+        return $sum;
+    }
 }

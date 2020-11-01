@@ -81,7 +81,7 @@
   <script src="{{asset('js/jquery.fancybox.min.js')}}"></script>
   <script src="{{asset('js/jquery.sticky.js')}}"></script>
   <script src="{{asset('js/jquery.mb.YTPlayer.min.js')}}"></script>
-  <script src="https://kit.fontawesome.com/2de225e4d0.js" crossorigin="anonymous"></script>
+
 
   <script src="{{asset('js/cart.js')}}"></script>
   <script src="{{asset('js/main.js')}}"></script>

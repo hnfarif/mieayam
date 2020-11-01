@@ -14,49 +14,52 @@ $(document).ready(function(){
        //-----------^parse the item by getting---^--stored item
     }
 
+    for(var i = 1; i <= barang.length; i++){
+        btnClick(i);
+    }
 
-    $('.btn_add_1').on('click', function(){
+    function btnClick(btn){
 
-        if(!cart.find( el => el[0] === barang[0][0])){
+        $('.btn_add_'+btn).on('click', function(){
 
-            cart.push(barang[0])
+            if(!cart.find( el => el[0] === barang[btn -1][0])){
 
-            localStorage.setItem('cart', JSON.stringify(cart));
-            console.log(cart);
-            alert('Barang berhasil ditambahkan')
+                cart.push(barang[btn -1])
 
-        }else{
+                localStorage.setItem('cart', JSON.stringify(cart));
+                console.log(cart);
+                alert('Barang berhasil ditambahkan')
 
-            alert('Barang sudah ada di keranjang')
-            console.log(cart);
-        }
-    });
+            }else{
 
-    $('.btn_add_2').on('click', function(){
+                alert('Barang sudah ada di keranjang')
+                console.log(cart);
+            }
 
-        if(!cart.find( el => el[0] === barang[1][0])){
-            cart.push(barang[1])
-            localStorage.setItem('cart', JSON.stringify(cart));
-            console.log(cart);
-            alert('Barang berhasil ditambahkan')
-        }else{
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+             });
 
-            alert('Barang sudah ada di keranjang')
-        }
-    });
+            $.ajax({
 
-    $('.btn_add_3').on('click', function(){
+                url : '/menu',
+                method : 'POST',
+                data : {
+                    'total' : cart
+                },
+                success : function(data){
+                   $('#ttlCart').html('<i class="icon-shopping-bag ml-2"></i>('+data+')');
 
-        if(!cart.find( el => el[0] === barang[2][0])){
-            cart.push(barang[2])
+                }
 
-            localStorage.setItem('cart', JSON.stringify(cart));
-            console.log(cart);
-            alert('Barang berhasil ditambahkan')
-        }else{
-            alert('Barang sudah ada di keranjang')
-        }
-    });
+            });
+
+            });
+
+    }
+
 
     let listbarang = "";
 
@@ -93,8 +96,6 @@ $(document).ready(function(){
 
         btntambah(j);
         btnminus(j);
-
-
 
     }
 
@@ -171,7 +172,7 @@ $(document).ready(function(){
             }
 
         });
-            
+
         });
     }
 
