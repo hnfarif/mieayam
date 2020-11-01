@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Prophecy\Doubler\Generator\Node\ReturnTypeNode;
+use App\Cart;
 
 class CartController extends Controller
 {
@@ -86,20 +87,10 @@ class CartController extends Controller
     public function dataTotal(Request $request)
     {
         $total = $request->get('total');
-        $sum  = 0;
-        $arr = [];
-        foreach ($total as $ttl) {
+        $totalhrg = new Cart();
 
-            if (isset($ttl[1])) {
+        $totalhrg = $totalhrg->hitungTotal($total);
 
-                array_push($arr, $ttl[1]);
-            }
-            // return $ttl;
-
-        }
-
-        $sum = array_sum($arr);
-
-        return $sum;
+        return $totalhrg;
     }
 }
