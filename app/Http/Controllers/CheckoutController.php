@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class MenuController extends Controller
+class CheckoutController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +13,7 @@ class MenuController extends Controller
      */
     public function index()
     {
-        return view('menu');
+        return view('checkout');
     }
 
     /**
@@ -80,22 +80,5 @@ class MenuController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function jumlahItem(Request $request)
-    {
-        $jml = $request->get('total');
-        $sum  = 0;
-        $arr = [];
-        foreach ($jml as $key => $ttl) {
-
-            if (isset($ttl[1])) {
-
-                array_push($arr, $key);
-            }
-        }
-        $sum = count($arr);
-
-        return $sum;
     }
 }

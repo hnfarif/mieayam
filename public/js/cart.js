@@ -14,6 +14,8 @@ $(document).ready(function(){
        //-----------^parse the item by getting---^--stored item
     }
 
+
+
     for(var i = 1; i <= barang.length; i++){
         btnClick(i);
     }
@@ -77,7 +79,7 @@ $(document).ready(function(){
                                         '<button class="btn btn-outline-primary js-btn-minus btnMinus'+i+'" type="button">&minus;</button>' +
                                     '</div>' +
 
-                                    '<input type="text" class="form-control text-center border mr-0 qty-barang-'+i+'" value="1" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">' +
+                                    '<input type="text" class="form-control text-center border mr-0 qty-barang-'+i+'" value="0" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">' +
 
                                     '<div class="input-group-append">'+
                                         '<button class="btn btn-outline-primary js-btn-plus btnTambah'+i+'" type="button">&plus;</button>' +
@@ -99,6 +101,7 @@ $(document).ready(function(){
 
     }
 
+
     let hrgItem = [['1'],['2'],['3']];
 
     function btntambah(data){
@@ -119,6 +122,7 @@ $(document).ready(function(){
                 hrgItem[data].splice(1,2,hrg_brg * (parseInt(qty_brg) + 1));
 
 
+
             $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -134,6 +138,7 @@ $(document).ready(function(){
                 success : function(data){
                     $('.total_harga').text(data);
                     $('.total_semua').text(data);
+
                 }
 
             });
@@ -152,7 +157,9 @@ $(document).ready(function(){
 
             $('#total-'+data).text(hrg_brg * (parseInt(qty_brg) -1));
             hrgItem[data].push(hrg_brg * (parseInt(qty_brg) + 1));
+
             hrgItem[data].splice(1,2,hrg_brg * (parseInt(qty_brg) - 1));
+
 
         $.ajaxSetup({
                 headers: {
@@ -169,6 +176,7 @@ $(document).ready(function(){
             success : function(data){
                 $('.total_harga').text(data);
                 $('.total_semua').text(data);
+
             }
 
         });
@@ -183,12 +191,14 @@ $(document).ready(function(){
         cart.splice(0,1);
         localStorage.setItem('cart', JSON.stringify(cart));
 
+
     });
 
     $('.hapus-1').on('click', function(){
 
         cart.splice(1,1);
         localStorage.setItem('cart', JSON.stringify(cart));
+
 
     });
 
@@ -197,7 +207,20 @@ $(document).ready(function(){
         cart.splice(2,1);
         localStorage.setItem('cart', JSON.stringify(cart));
 
+
     });
+
+    listmie = "";
+    let hrg = 0;
+    let qty = 0;
+
+    for(var i = 0; i < cart.length; i++){
+        qty = $('.qty-barang-'+i).val();
+        listmie += '<tr><td> '+cart[i][0] +' <strong class="mx-2">x</strong></td>'+
+        '<td></td></tr>';
+    }
+
+    $('.daftarMie').html(listmie);
 
 
 });

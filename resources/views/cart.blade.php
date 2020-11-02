@@ -81,7 +81,7 @@
 
               <div class="row">
                 <div class="col-md-12">
-                  <button class="btn btn-primary btn-lg btn-block" onclick="window.location='checkout.html'">Proses Pembayaran</button>
+                  <button class="btn btn-primary btn-lg btn-block" onclick="window.location='/checkout'">Proses Pembayaran</button>
                 </div>
               </div>
             </div>
