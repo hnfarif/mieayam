@@ -15,9 +15,12 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', 'HomeController@index');
+Route::get('/home', 'HomeController@index');
 Route::get('/testimonial', 'TestimoniController@index');
 Route::get('/about', 'AboutController@index');
 Route::get('/menu', 'MenuController@index');
 Route::get('/cart', 'CartController@index');
+Route::get('/checkout', 'CheckoutController@index');
+Route::get('/thank', 'ThankController@index');
 Route::post('/cart', 'CartController@dataTotal');
 Route::post('/menu', 'MenuController@jumlahItem');
