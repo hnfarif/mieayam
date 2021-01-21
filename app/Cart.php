@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Cart extends Model
 {
 
-    public function hitungTotal($hrg)
-    {
 
+    public function hitungTotal($hrg, $lvl)
+    {
         $sum  = 0;
         $arr = [];
+
         foreach ($hrg as $ttl) {
 
             if (isset($ttl[1])) {
@@ -19,7 +20,9 @@ class Cart extends Model
                 array_push($arr, $ttl[1]);
             }
         }
-        $sum = array_sum($arr);
+        $sum = array_sum($arr) + (array_sum($arr) * 0.1);
+
+
 
         return $sum;
     }
