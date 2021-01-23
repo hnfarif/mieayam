@@ -56,22 +56,33 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
     Route::get('penjualan', 'PenjualanController@index');
     Route::get('penjualan/{penjualan}', 'PenjualanController@show');
     Route::post('penjualan/store', 'PenjualanController@store');
+    Route::delete('penjualan/{penjualan}', 'PenjualanController@destroy');
+    Route::get('penjualan/{penjualan}/edit', 'PenjualanController@edit');
+    Route::patch('penjualan/{penjualan}/edit', 'PenjualanController@update');
 
 
-    Route::resource('pembelian-material', 'BeliBahanBakuController');
+    Route::get('pembelian-material', 'BeliBahanBakuController@index');
+    Route::get('pembelian-material/{pembelian}', 'BeliBahanBakuController@show');
+    Route::post('pembelian-material/store', 'BeliBahanBakuController@store');
+    Route::delete('pembelian-material/{pembelian}', 'BeliBahanBakuController@destroy');
+    Route::get('pembelian-material/{pembelian}/edit', 'BeliBahanBakuController@edit');
+    Route::patch('pembelian-material/{pembelian}/edit', 'BeliBahanBakuController@update');
 });
 
 Route::group(['namespace' => 'User', 'middleware' => ['auth', 'CheckRole:user,admin']], function () {
 
+    Route::get('/', 'HomeController@index');
     Route::get('/home', 'HomeController@index');
     Route::get('/testimonial', 'TestimoniController@index');
     Route::get('/about', 'AboutController@index');
     Route::get('/menu', 'MenuController@index');
     Route::get('/cart', 'CartController@index');
+    Route::post('/cart/store', 'CartController@store');
+    Route::get('/cart/update/{id}', 'CartController@deleteCart');
     Route::post('/cart', 'MenuController@productSummary');
     Route::get('/checkout', 'CheckoutController@index');
     Route::get('/thank', 'ThankController@index');
-    Route::post('/cart', 'CartController@dataTotal');
+    // Route::post('/cart', 'CartController@dataTotal');
     Route::post('/menu', 'MenuController@jumlahItem');
 });
 

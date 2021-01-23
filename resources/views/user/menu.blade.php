@@ -8,12 +8,12 @@
         </div>
 
         <div class="row">
-            <div class="col-lg-4 mb-5 col-md-6">
-                <form action="/cart">
-
-                    @foreach ($menu as $item)
+            @foreach ($menu as $item)
+                <div class="col-lg-4 mb-5 col-md-6">
+                    <form action="/cart" method="post">
+                        @csrf
                         <div class="wine_v_1 text-center pb-4">
-                            <a href="#" class="thumbnail d-block mb-4"><img width="350px"
+                            <a href="#" class="thumbnail d-block mb-4"><img width="300" height="300"
                                     src="{{ url('/data_images/' . $item->gambar_menu) }}" alt="Image" class="img-fluid"></a>
                             <div>
                                 <h3 class="heading mb-1"><a href="#">{{ $item->nama_menu }}</a></h3>
@@ -29,13 +29,19 @@
                                 {{-- <label for="">Jumlah : </label>
                                 <input type="number" name="lvl_1" id="lvl_1" min="0" max="50">
                                 --}}
+
                                 <button class="btn add btn_add_1" type="submit"><span class="icon-shopping-bag mr-3"></span>
                                     Beli</button>
                             </div>
                         </div>
-                    @endforeach
-                </form>
-            </div>
+                        <input type="hidden" name="id" value="{{ $item->id }}">
+                        <input type="hidden" name="nama" value="{{ $item->nama_menu }}">
+                        <input type="hidden" name="harga" value="{{ $item->harga_menu }}">
+                        <input type="hidden" name="gambar" value="{{ $item->gambar_menu }}">
+
+                    </form>
+                </div>
+            @endforeach
 
         </div>
     </div>

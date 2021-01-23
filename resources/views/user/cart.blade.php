@@ -7,6 +7,11 @@
                     <h2 class="d-block">Keranjang</h2>
                 </div>
             </div>
+            @if (session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
+                </div>
+            @endif
             <div class="row mb-5">
                 <form class="col-md-12" method="post">
                     <div class="site-blocks-table">
@@ -20,7 +25,21 @@
                                     <th class="product-remove">Hapus</th>
                                 </tr>
                             </thead>
-                            <tbody class="daftar-keranjang">
+                            <tbody>
+                                @foreach ($menu as $item)
+                                    <tr>
+                                        <td class="product-thumbnail">
+                                            <img width="50" height="50" src="{{ url('/data_images/' . $item['gambar']) }}"
+                                                alt="Image" class="img-fluid">
+                                            <h2 class="h5 cart-product-title text-black">{{ $item['nama'] }}</h2>
+                                        </td>
+                                        <td>{{ $item['harga'] }}</td>
+                                        <td>{{ $item['jumlah'] }}</td>
+                                        <td>{{ $item['harga'] * $item['jumlah'] }}</td>
+                                        <td><a href="/cart/update/{{ $item['id'] }}" type="submit"
+                                                class="btn btn-primary height-auto btn-sm">X</a></td>
+                                    </tr>
+                                @endforeach
 
                             </tbody>
                         </table>
@@ -62,27 +81,24 @@
                                     <h3 class="text-black h4 text-uppercase">Total Keranjang</h3>
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <span class="text-black">Subtotal</span>
-                                </div>
-                                <div class="col-md-6 text-right">
-                                    <strong class="text-black total_harga"></strong>
-                                </div>
-                            </div>
+
                             <div class="row mb-5">
                                 <div class="col-md-6">
                                     <span class="text-black">Total</span>
                                 </div>
                                 <div class="col-md-6 text-right">
-                                    <strong class="text-black total_semua"></strong>
+                                    <strong class="text-black total_semua">{{ $total }}</strong>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    <button class="btn btn-primary btn-lg btn-block"
-                                        onclick="window.location='/checkout'">Proses Pembayaran</button>
+                                    <form action="/cart/store" method="post">
+                                        @csrf
+                                        <button class="btn btn-primary btn-lg btn-block" type="submit">Pesan
+                                            Sekarang</button>
+                                    </form>
+
                                 </div>
                             </div>
                         </div>

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\BahanBaku;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Pembelian;
 
 class BeliBahanBakuController extends Controller
 {
@@ -20,7 +22,10 @@ class BeliBahanBakuController extends Controller
 
     public function index()
     {
-        return view('admin.tabel_transaksi.pembelian');
+        $pembelian = Pembelian::all();
+        $bahanbaku = BahanBaku::all();
+
+        return view('admin.tabel_transaksi.pembelian', ['pembelian' => $pembelian, 'bahanbaku' => $bahanbaku]);
     }
 
     /**
@@ -41,7 +46,23 @@ class BeliBahanBakuController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+
+            'id_bahan_baku' => 'required',
+            'jumlah' => 'required',
+            'satuan' => 'required',
+            'total_harga' => 'required'
+
+        ]);
+
+        Pembelian::create([
+            'id_bahan_baku' => $request->id_bahan_baku,
+            'jumlah' => $request->jumlah,
+            'satuan' => $request->satuan,
+            'total_harga' => $request->total_harga
+        ]);
+
+        return redirect()->back()->with('status', 'Data Berhasil Ditambah!');
     }
 
     /**
@@ -50,9 +71,9 @@ class BeliBahanBakuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Pembelian $pembelian)
     {
-        //
+        return $pembelian;
     }
 
     /**
@@ -61,9 +82,9 @@ class BeliBahanBakuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Pembelian $pembelian)
     {
-        //
+        return $pembelian;
     }
 
     /**
@@ -73,9 +94,18 @@ class BeliBahanBakuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Pembelian $pembelian)
     {
-        //
+        Pembelian::where('id', $pembelian->id)->update([
+
+            'id_bahan_baku' => $request->id_bahan_baku,
+            'jumlah' => $request->jumlah,
+            'satuan' => $request->satuan,
+            'total_harga' => $request->total_harga
+
+        ]);
+
+        return redirect()->back()->with('status', 'Data Berhasil Diubah!');
     }
 
     /**
@@ -84,8 +114,10 @@ class BeliBahanBakuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Pembelian $pembelian)
     {
-        //
+        Pembelian::destroy($pembelian->id);
+
+        return redirect()->back()->with('status', 'Data Berhasil Dihapus!');
     }
 }

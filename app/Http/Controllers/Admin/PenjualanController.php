@@ -52,9 +52,9 @@ class PenjualanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Penjualan $penjualan)
     {
-        //
+        return $penjualan;
     }
 
     /**
@@ -63,9 +63,9 @@ class PenjualanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Penjualan $penjualan)
     {
-        //
+        return $penjualan;
     }
 
     /**
@@ -75,9 +75,17 @@ class PenjualanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Penjualan $penjualan)
     {
-        //
+        Penjualan::where('id', $penjualan->id)->update([
+
+            'id_user' => $request->id_user,
+            'id_menu' => $request->id_menu,
+            'jumlah' => $request->jumlah,
+            'total_harga' => $request->total_harga
+        ]);
+
+        return redirect()->back()->with('status', 'Data Berhasil Diubah!');
     }
 
     /**
@@ -86,8 +94,10 @@ class PenjualanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Penjualan $penjualan)
     {
-        //
+        Penjualan::destroy($penjualan->id);
+
+        return redirect()->back()->with('status', 'Data Berhasil Dihapus!');
     }
 }

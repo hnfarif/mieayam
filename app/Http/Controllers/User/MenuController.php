@@ -90,29 +90,58 @@ class MenuController extends Controller
         //
     }
 
-    public function jumlahItem(Request $request)
-    {
-        $jml = $request->get('total');
-        $sum  = 0;
-        $arr = [];
-        foreach ($jml as $key => $ttl) {
+    // public function jumlahItem(Request $request)
+    // {
+    //     $jml = $request->get('total');
+    //     $sum  = 0;
+    //     $arr = [];
+    //     foreach ($jml as $key => $ttl) {
 
-            if (isset($ttl[1])) {
+    //         if (isset($ttl[1])) {
 
-                array_push($arr, $key);
-            }
-        }
-        $sum = count($arr);
+    //             array_push($arr, $key);
+    //         }
+    //     }
+    //     $sum = count($arr);
 
-        return $sum;
-    }
+    //     return $sum;
+    // }
 
     public function productSummary(Request $request)
     {
+        $data = [
+            "jumlah" => $request->jumlah,
+            "id" => $request->id,
+            "nama" => $request->nama,
+            "harga" => $request->harga,
+            "gambar" => $request->gambar
 
+        ];
 
-        session(['key' => $request->all()]);
+        $dataCart = [];
 
-        dd(session('key'));
+        if (session()->has('menu')) {
+            $menu = session('menu');
+            foreach ($menu as $item) {
+
+                if ($request->id == $item['id']) {
+
+                    $item['jumlah'] = $item['jumlah'] + $request->jumlah;
+                    session(['update' => true]);
+                }
+
+                array_push($dataCart, $item);
+            }
+            if (!session()->has('update')) {
+                array_push($dataCart, $data);
+            }
+            session()->forget('update');
+        } else {
+            array_push($dataCart, $data);
+        }
+
+        session(['menu' => $dataCart]);
+
+        return redirect('/cart');
     }
 }

@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Prophecy\Doubler\Generator\Node\ReturnTypeNode;
-use App\Cart;
+use App\Penjualan;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
@@ -23,7 +24,14 @@ class CartController extends Controller
 
     public function index()
     {
-        return view('user.cart');
+        $menu = session('menu');
+        $total = 0;
+        foreach ($menu as $item) {
+
+            $total += $item['jumlah'] * $item['harga'];
+        }
+
+        return view('user.cart', ['menu' => $menu, 'total' => $total]);
     }
 
     /**
@@ -44,7 +52,25 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $menu = session('menu');
+        $cartOrder = [];
+        foreach ($menu as $item) {
+            Penjualan::create([
+                'id_user' => Auth::user()->id,
+                'id_menu' => $item['id'],
+                'jumlah' => $item['jumlah'],
+                'total_harga' => $item['jumlah'] * $item['harga']
+            ]);
+
+            if ($item['id']) {
+                unset($item);
+            } else {
+                array_push($cartOrder, $item);
+            }
+        }
+        session(['menu' => $cartOrder]);
+
+        return redirect('/cart')->with('status', 'Berhasil Memesan Mie');;
     }
 
     /**
@@ -92,15 +118,35 @@ class CartController extends Controller
         //
     }
 
-    public function dataTotal(Request $request)
+    public function deleteCart($id)
     {
-        $total = $request->get('total');
-        $level = $request->get('level');
 
-        $totalhrg = new Cart();
+        $menu = session('menu');
 
-        $totalhrg = $totalhrg->hitungTotal($total, $level);
+        $cartUpdate = [];
 
-        return $totalhrg;
+        foreach ($menu as $item) {
+            if ($id == $item['id']) {
+                unset($item);
+            } else {
+                array_push($cartUpdate, $item);
+            }
+        }
+
+        session(['menu' => $cartUpdate]);
+
+        return redirect('/cart');
     }
+
+    // public function dataTotal(Request $request)
+    // {
+    //     $total = $request->get('total');
+    //     $level = $request->get('level');
+
+    //     $totalhrg = new Cart();
+
+    //     $totalhrg = $totalhrg->hitungTotal($total, $level);
+
+    //     return $totalhrg;
+    // }
 }
