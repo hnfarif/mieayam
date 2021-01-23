@@ -26,7 +26,7 @@ class CartController extends Controller
     {
         $menu = session('menu');
         $total = 0;
-        foreach ($menu as $item) {
+        foreach ($menu ?? '' as $item) {
 
             $total += $item['jumlah'] * $item['harga'];
         }
